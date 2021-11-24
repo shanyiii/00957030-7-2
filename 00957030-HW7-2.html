@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>00957030-7-2</title>
+    <style type="text/CSS">
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            background-color: lightblue;
+            font-family: Perpetua;
+        }
+
+        table, td, th {
+            border: 1px solid black;
+            padding: 4px;
+        }
+
+        th {
+            text-align: center;
+            color: white;
+            background-color: darkblue;
+        }
+
+        tr.oddrow {
+            background-color: white;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="#">
+        <p>
+            <label>Book Title:
+                <input id="title" type="text">
+            </label>
+            <label>Author(s):
+                <input id="author" type="text">
+            </label>
+            <label>Year:
+                <input id="year" type="number">
+            </label>
+            <label>Book URL:
+                <input id="book" type="URL">
+            </label>
+        </p>
+        <p>
+            <input type="button" value="Add New Item" id="addButton">
+            <input type="button" value="Remove All Items" id="removeAllButton">
+        </p>
+    </form>
+    <hr>
+    <div id="display">
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Auother</th>
+                <th>Year</th>
+                <th>URL</th>
+            </tr>
+    </div>
+    <script type="text/javascript">
+        var tag = [];
+        function start() {
+            var add = document.getElementById("addButton");
+            add.addEventListener("click", search, false);
+            var del = document.getElementById("removeAllButton");
+            del.addEventListener("click", remove, false);
+        }
+        start();
+        function save() {
+            var len = localStorage.length;
+            for (let i = 0; i < len; i++)
+                teg[i] = localStorage.key
+        }
+        function search() {
+            var title = document.getElementById("title");
+            var author = document.getElementById("author");
+            var year = document.getElementById("year");
+            var book = document.getElementById("book");
+            var text = { "title": title.value, "author": author.value, "year": year.value, "book": book.value }
+            var nono = JSON.stringify(text);
+            var now = new Date().getTime();
+            localStorage.setItem("ntou-" + now, nono);
+            title.value = "";
+            author.value = "";
+            year.value = "";
+            book.value = "";
+            var len = localStorage.length;
+            for (let i = 0; i < len; i++)
+                tag[i] = localStorage.key(i);
+            var mark = "<table><tr><th>Title</th><th>Auother</th><th>Year</th><th>URL</th></tr>"
+            for (let j in tag) {
+                if (tag[j].startsWith("ntou")) {
+                    mark += '<tr><td>' + JSON.parse(localStorage.getItem(tag[j])).title + '</td>' + '<td>' + JSON.parse(localStorage.getItem(tag[j])).author + '</td>'
+                        + '<td>' + JSON.parse(localStorage.getItem(tag[j])).year + '</td>' + '<td>' + JSON.parse(localStorage.getItem(tag[j])).book + '</td></tr>'
+                }
+            }
+            mark += "</table>";
+            document.getElementById("display").innerHTML = mark;
+        }
+        function remove() {
+            for (let i in tag)
+                localStorage.removeItem(tag[i]);
+            var mark = "<table><tr><th>Title</th><th>Auother</th><th>Year</th><th>URL</th></tr>";
+            document.getElementById("display").innerHTML = mark;
+            alert("All items were removed!");
+        }
+    </script>
+</body>
+
+</html>
